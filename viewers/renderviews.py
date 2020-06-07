@@ -35,7 +35,7 @@ def dashboard(request):
         prbcnt=0
         ranklist={}
         days = []
-    return render(request,"core/dashboard.html",context={
+    return render(request,"dashboard.html",context={
         "user":user,
         "ProbCat":m,
         "ProbTags":mtag,
@@ -89,7 +89,7 @@ def contests(request):
             
     ress = zip(ress,subs)
 
-    return render(request, 'core/contests.html', {'ress':ress,'user':user})
+    return render(request, 'contests.html', {'ress':ress,'user':user})
 
 def problems(request):
     '''
@@ -187,7 +187,7 @@ def problems(request):
             types.append("unsolved")
         final.append(x)
     prbs = zip(final,color,types)
-    return render(request,"core/problems.html",context={"problems":prbs,'filterform':filterform,'user':user})
+    return render(request,"problems.html",context={"problems":prbs,'filterform':filterform,'user':user})
 
 def friendsunsolved(request):
     '''
@@ -333,7 +333,7 @@ def friendsunsolved(request):
         contextdict["unsolved"] = unsolved
         contextdict["funsolved"] = len(friendsunsolved)
 
-        return render(request,"core/friends.html",context=contextdict)
+        return render(request,"friends.html",context=contextdict)
     else:    
         messages.error(request,"{} Handle not found".format(friend))
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -401,7 +401,7 @@ def suggestor(request,slug):
         prbs = list(prbs)
         random.shuffle(prbs)
         prbs = prbs[0:min(10,len(prbs))]
-        return render(request,"core/suggestprobs.html",context={"user":user,"prbs":prbs,"minindex":minindex,"maxindex":maxindex,"ratingmax":ratingmax,"ratingmin":ratingmin})
+        return render(request,"suggestprobs.html",context={"user":user,"prbs":prbs,"minindex":minindex,"maxindex":maxindex,"ratingmax":ratingmax,"ratingmin":ratingmin})
     else:
         if slug == "contest":
             user=userinfo(request,handle)
@@ -440,7 +440,7 @@ def suggestor(request,slug):
             c = list(c)
             random.shuffle(c)
             c = c[:min(10,len(c))]
-            return render(request,"core/suggestconts.html",context={"contests":c,"user":user,"mindiff":mindiff,"maxdiff":maxdiff})
+            return render(request,"suggestconts.html",context={"contests":c,"user":user,"mindiff":mindiff,"maxdiff":maxdiff})
         else:
             messages.error(request,"URL error. Please try again")
             return redirect("/cfviewer/")
@@ -475,7 +475,7 @@ def submissionsviewer(request,handle,contid):
         except:
             pass
 
-    return render(request,"core/submissions.html",context={"handle":handle,"contest":contid,'subs':nids,"user":user})
+    return render(request,"submissions.html",context={"handle":handle,"contest":contid,'subs':nids,"user":user})
 
 def foobarinvite(request,handle):
     '''
@@ -498,19 +498,19 @@ def foobarinvite(request,handle):
             cfhandle = inviteform.cleaned_data.get("cfhandle")
             if(cfhandle != handle):
                 messages.error(request,"You cannot invite other users. You can only add your handle to the list")
-                return render(request,"core/invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
+                return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
 
             if(len(Invitees.objects.filter(cfhandle = cfhandle)) != 0):
                 messages.error(request,"You are already there on the list")
-                return render(request,"core/invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
+                return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
             
             r = requests.get('https://codeforces.com/api/user.info?handles={}'.format(cfhandle)).json()
             if(r['status']!="OK"):
                 messages.error(request,"User not found. Please try again")
-                return render(request,"core/invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
+                return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
             if(r['result'][0]['rating'] < 1500):
                 messages.error(request,"Your rating needs to be atleast 1500 for getting an invite")
-                return render(request,"core/invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
+                return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
             inv = inviteform.save(commit=True)
             inv.status = 0
             inv.save()
@@ -518,14 +518,14 @@ def foobarinvite(request,handle):
         else:
             print(inviteform.errors)
             messages.error(request,"Data invalid.Please try again")
-            return render(request,"core/invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
+            return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
     
     if len(Invitees.objects.filter(cfhandle = handle)) == 0:
         inviteform = InviteForm()
     else:
         inviteform = None
     currlist = Invitees.objects.all().order_by("id")
-    return render(request,"core/invites.html",context={
+    return render(request,"invites.html",context={
         "user":user,
         "inviteform":inviteform,
         "currlist":currlist,

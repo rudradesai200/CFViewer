@@ -1,5 +1,4 @@
 # Byte-compiled / optimized / DLL files
-__init__.py
 */__pycache__/
 migrations/
 __pycache__/

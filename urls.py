@@ -23,8 +23,6 @@ urlpatterns = [
     url(r'^dashboard/',dashboard,name="dashboard"),
     url(r'^showbooks/',showbooks,name="books"),
     url(r'^subs/(?P<handle>.*)/(?P<contid>.*)/',submissionsviewer,name="subsviewer"),
-    url(r'^refreshproblems/',fetchproblems,name="fetchproblems"),
-    url(r'^refreshcontests/',fetchcontests,name="fetchcontests"),
     url(r'^problems/',problems,name="problems"),
     url(r'^contests/',contests,name="contests"),
     url(r'^friends/',friendsunsolved,name="friendsunsolved"),
@@ -32,7 +30,7 @@ urlpatterns = [
     url(r'^invite/(?P<handle>.*)/',foobarinvite,name="foobarinvite"),
     url(r'^change/(?P<handle>.*)/(?P<stat>.*)/',acceptinvite,name="invitestatuschange"),
     url(r'^adspage/',adspage,name="adspage"),
-    url(r'^$',home,name="home"),
+    url(r'^',home,name="home"),
 ]
 
 handler404 = 'core.viewers.staticviews.error_404_view'

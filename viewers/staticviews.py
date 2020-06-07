@@ -14,7 +14,7 @@ def home(request):
         @errorhandling:
             None ;
     '''
-    return render(request,"core/home.html",context=None)
+    return render(request,"home.html",context=None)
 
 def showbooks(request):
     '''
@@ -32,7 +32,7 @@ def showbooks(request):
     
     user = userinfo(request,handle)
     
-    return render(request,"core/books.html",context={"user":user})
+    return render(request,"books.html",context={"user":user})
 
 def error_404_view(request, exception):
     '''
@@ -44,7 +44,7 @@ def error_404_view(request, exception):
             None.;
     '''
     # messages.error(request,exception)
-    return render(request,"core/404.html",context=None)
+    return render(request,"404.html",context=None)
 
 
 def adspage(request):
@@ -63,4 +63,4 @@ def adspage(request):
     
     user = userinfo(request,handle)
     messages.success(request,"Thanks for clicking on this button. Now you will see an ads page. Please read the information before clicking anywhere.")
-    return render(request,"core/adspage.html",context={"user":user})
+    return render(request,"adspage.html",context={"user":user})
