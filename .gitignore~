@@ -1,9 +1,7 @@
-migrations/
-__init__.py
-__pycache__/
-
 # Byte-compiled / optimized / DLL files
-
+__init__.py
+*/__pycache__/
+migrations/
 __pycache__/
 *.py[cod]
 *$py.class
@@ -132,4 +130,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
