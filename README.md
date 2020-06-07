@@ -27,7 +27,9 @@ Just enter the name of a friend and get some detailed statistics comparing the p
 The main functionality of this page are the filters. You can combine multiple filters to get the problems you want to solve. ![problems_page](https://user-images.githubusercontent.com/44108388/83965991-4a85bb00-a8d5-11ea-8870-de4b25f2d63e.png)
 
 ## Contests Page
-It is a simple page which lists all the non-gym contests available on codeforces and displays it in a tabular format Ex:
+It is a simple page which lists all the non-gym contests available on codeforces and displays it in a tabular format.
+![Contests_page](https://user-images.githubusercontent.com/44108388/83966272-d815da80-a8d6-11ea-9fa3-8cfd36be0a73.png)
 
 ## Books
 This page contains the top 10 Books for competitive programming suggested by experts in this field. Also, a link to the amazon page for that book is attached.
+![Books_page](https://user-images.githubusercontent.com/44108388/83966271-d6e4ad80-a8d6-11ea-8b77-1f0124869d5a.png)
