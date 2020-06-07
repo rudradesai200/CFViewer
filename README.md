@@ -1,3 +1,5 @@
+<a href="https://www.buymeacoffee.com/rudradesai200" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
 # CFViewer
 CFViewer is a project designed to help competetive programmers who use codeforces platform for participating in contests and problem solving. There are many features present on the website, which coders can use to find and explore new problems and contests.
 
