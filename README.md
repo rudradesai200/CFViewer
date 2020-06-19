@@ -3,6 +3,9 @@
 # CFViewer
 CFViewer is a project designed to help competetive programmers who use codeforces platform for participating in contests and problem solving. There are many features present on the website, which coders can use to find and explore new problems and contests.
 
+## Contributing
+This platform is completely made using Django-Python Framework. Because, it is hosted on my personal AWS server, I cannot share the complete project on GitHub, So, I have shared just the main app here. Please try to test if it is working or not first, then only open a pull request. Any suggestion and edits are welcome! Thanks in advance for the contribution.
+
 Following is the list of features on the website and how to use it.
 ## Dashboard
 Dashboard contains statistics of coder's perfomance till now on codeforces. It contains 4 different charts - 
