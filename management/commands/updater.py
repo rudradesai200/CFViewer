@@ -1,12 +1,56 @@
 from django.core.management.base import BaseCommand, CommandError
-from core.viewers.adminviews import fetchcontests, fetchproblems
-
 # User defined
 from core.models import Contests, Problems, Invitees
 
 # Python library
 import requests
 import json
+def fetchcontestsOnce(self):
+    try:
+        r = requests.get('https://codeforces.com/api/contest.list?gym=false')
+        json = r.json()
+    except:
+        # messages.error(request,"Codeforces unavailable")
+        self.stdout.write(self.style.ERROR('Codeforces unavailable'))
+        return
+        # return redirect("/cfviewer/")
+    maxdiff = 0
+    if json['status'] == "OK":
+        results = json['result']
+        for i,res in enumerate(results):
+            print("Storing contest {} out of {}".format(i,len(results)))
+            cont = Contests()
+            cont.contid = res['id']
+            cont.name = res['name']
+            cont.phase = res['phase']
+            cont.conttype = res['type']
+            cont.duration = res['durationSeconds']
+            cont.url = "codeforces.com/contest/{}".format(cont.contid)
+            cont.difficulty = 0
+            tsum = 0
+            try:
+                s = requests.get('https://codeforces.com/api/contest.standings?contestId={}&from=1&count=1'.format(res['id'])).json()
+                if s['status'] == "OK":
+                    for x in s['result']['problems']:
+                        try:
+                            tsum += x['rating']
+                        except:
+                            pass 
+            except:
+                pass
+            maxdiff = max(maxdiff,tsum)
+            cont.save()
+        Contests.objects.filter(phase="BEFORE").delete()
+        for cont in Contests.objects.all():
+            cont.difficulty = int((tsum*10.00)/maxdiff)
+            cont.save()
+        self.stdout.write(self.style.SUCCESS('Contests list Successfully updated'))
+
+        # return redirect("/cfviewer/contests")
+    else:
+        self.stdout.write(self.style.ERROR('Status Not Ok'))
+        # messages.error(request,"Status not ok")
+        # return redirect("/cfviewer/")
 def fetchcontests(self):
     '''
         @type: adminfunction;
@@ -26,6 +70,7 @@ def fetchcontests(self):
     except:
         # messages.error(request,"Codeforces unavailable")
         self.stdout.write(self.style.ERROR('Codeforces unavailable'))
+        return
         # return redirect("/cfviewer/")
 
     if json['status'] == "OK":
@@ -45,10 +90,8 @@ def fetchcontests(self):
             self.stdout.write(self.style.ERROR('10 difficulty level object not found in DB'))
             # messages.error(request,"10 diff object not found")
             # return redirect("/cfviewer/")
-        i = 1
-        for res in results:
+        for i,res in enumerate(results):
             # print("Storing contest {} out of {}".format(i,len(results)))
-            i += 1
             if(len(c.filter(contid=res['id'])) != 0):
                 break
             cont = Contests()
@@ -57,6 +100,7 @@ def fetchcontests(self):
             cont.phase = res['phase']
             cont.conttype = res['type']
             cont.duration = res['durationSeconds']
+            # cont.timecreated = res['creationTimeSeconds']
             cont.url = "codeforces.com/contest/{}".format(cont.contid)
             cont.difficulty = 0
             tsum = 0
@@ -127,6 +171,9 @@ class Command(BaseCommand):
     help = "Updates Problems List and Contests List"
 
     def handle(self, *args, **options):
+        # if options['first'] == 1:
+        # fetchcontestsOnce(self)
+        # else:
         fetchcontests(self)
         fetchproblems(self)
     
