@@ -6,7 +6,6 @@ class ProblemFilterForm(forms.Form):
     ratingmin = forms.IntegerField(required=False)
     ratingmax = forms.IntegerField(required=False)
     tags = forms.CharField(max_length=100,required=False,help_text="Enter comma separated strings Ex: dp, math")
-    show_tags = forms.BooleanField(required=False)
 
 class InviteForm(forms.ModelForm):
     class Meta:
