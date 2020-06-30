@@ -66,7 +66,7 @@ def contests(request):
 
     user = userinfo(request,handle)
 
-    ress = Contests.objects.all().order_by('-contid')
+    ress = Contests.objects.all()
     subs = requests.get('https://codeforces.com/api/user.status?handle={}'.format(handle)).json()
     if subs['status'] != "OK":
         subs['result'] = []
@@ -136,7 +136,6 @@ def problems(request):
 
     taglist = None
     filterform = ProblemFilterForm()
-    show_tags=False
     if request.method == "POST":
         filterform = ProblemFilterForm(request.POST)
         if filterform.is_valid():
@@ -144,14 +143,12 @@ def problems(request):
             ratingmin = filterform.cleaned_data.get('ratingmin')
             ratingmax = filterform.cleaned_data.get('ratingmax')
             tags = filterform.cleaned_data.get('tags')
-            show_tags = filterform.cleaned_data.get('show_tags')
             taglist = tags.split(',')
         else:
             print(filterform.errors)
             messages.error(request,"Invalid values provided")
             # return redirect("/cfviewer/")
-    if (show_tags == None):
-        show_tags = False
+    
     if (ratingmax == None) and (ratingmin == None):
         try:
             ratingmax = min(user['maxRating'] + 300,3500)
@@ -190,7 +187,7 @@ def problems(request):
             types.append("unsolved")
         final.append(x)
     prbs = zip(final,color,types)
-    return render(request,"problems.html",context={"problems":prbs,'filterform':filterform,'user':user,'show_tags':show_tags})
+    return render(request,"problems.html",context={"problems":prbs,'filterform':filterform,'user':user})
 
 def friendsunsolved(request):
     '''
