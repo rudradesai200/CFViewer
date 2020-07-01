@@ -48,7 +48,6 @@
                                             <th>Duration</th>
                                             <th>Attempted</th>
                                             <th>Submissions</th>
-                                            <th>Url</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -58,7 +57,7 @@
                                             {% else %}
                                             <tr style="background-color:#a8eabe;">
                                             {% endif %}
-                                                <td>{{x.0.name}}</td>
+                                                <td><a href="https://{{x.0.url}}" target="_blank">{{x.0.contid}} {{x.0.name|slice:":50"}}</a></td>
                                                 <td>{{x.0.conttype}}</td>
                                                 <td>{{x.0.difficulty}}</td>
                                                 <td>{{x.0.duration|sectodur}}</td>
@@ -74,8 +73,6 @@
                                                     <a href="/cfviewer/subs/{{user.handle}}/{{x.0.contid}}/" target="_blank">Submissions</a>
                                                     {% endif %}
                                                 </td>
-                                                <td><a href="https://{{x.0.url}}" target="_blank">Link</a></td>
-
                                             </tr>
                                         {% endfor %}
                                     </tbody>
