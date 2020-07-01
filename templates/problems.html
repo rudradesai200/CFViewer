@@ -78,12 +78,12 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <div class="form-group">
                                                 <input type="number" class="form-control" id="id_for_ratingmin" name="ratingmin" placeholder="Minimum Rating">
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <div class="form-group">
                                                 <input type="number" class="form-control" id="id_for_ratingmax" name="ratingmax"placeholder="Maximum Rating">
                                             </div>
@@ -94,6 +94,13 @@
                                         title="Tooltip on bottom" class="form-control" placeholder="Enter tags">
                                             </div>
                                         </div>
+                                        <div class="col-md-2">
+                                        <fieldset class="checkbox">
+                                            <label for="show_tags">
+                                                <input type="checkbox" id="id_for_show_tags" name="show_tags"> Show Tags
+                                            </label>
+                                        </fieldset>
+                                    </div>
                                     </div>
                                     <div class="form-actions">
                                         <div class="text-center">
@@ -122,9 +129,10 @@
                                             <th>Category</th>
                                             <th>Users Solved</th>
                                             <th>Rating</th>
-                                            <th>Link</th>
                                             <th>Type</th>
+                                            {% if show_tags %}
                                             <th>Tags</th>
+                                            {% endif %}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -135,13 +143,14 @@
                                             <tr style="background-color:{{x.1}};">
                                             {% endif %}
                                                 <td>{{ forloop.counter }}</td>
-                                                <td>{{x.0.name}}</td>
+                                                <td><a href="https://codeforces.com/contest/{{x.0.contestId}}/problem/{{x.0.index}}" target="_blank">{{x.0.name}}</a></td>
                                                 <td>{{x.0.index}}</td>
                                                 <td><a href="https://codeforces.com/problemset/status/{{x.0.contestId}}/problem/{{x.0.index}}" target="_blank">{{x.0.userssolved}}</a></td>
                                                 <td>{{x.0.rating}}</td>
-                                                <td><a href="https://codeforces.com/contest/{{x.0.contestId}}/problem/{{x.0.index}}" target="_blank">Link</a></td>
                                                 <td>{{ x.2 }}</td>
+                                                {% if show_tags %}
                                                 <td>{{x.0.tags}}</td>
+                                                {% endif %}
                                             </tr>
                                         {% endfor %}
                                     </tbody>

@@ -90,19 +90,17 @@
                                         <th>Difficulty</th>
                                         <th>Duration</th>
                                         <th>Status</th>
-                                        <th>Url</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for x in contests %}
                                             <tr>
                                                 <td>{{ forloop.counter }}</td>
-                                                <td>{{x.contid}}</td>
+                                                <td><a href="https://{{x.url}}" target="_blank">{{x.contid}}</a></td>
                                                 <td>{{x.conttype}}</td>
                                                 <td>{{x.difficulty}}</td>
                                                 <td>{{x.duration|sectodur}}</td>
                                                 <td>{{x.phase}}</td>
-                                                <td><a href="https://{{x.url}}" target="_blank">Link</a></td>
                                             </tr>
                                         {% endfor %}
                                 </tbody>
