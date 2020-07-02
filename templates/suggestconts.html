@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load secstotime %}
-{% block title %}CFViewer Suggestor{% endblock %}
+{% block title %}CFViewer Contests Recommender{% endblock %}
 {% block head %}
-<meta name="description" content="We challenge you to solve these Contests. Improve your skills while practicing with us. Contests suggestor based on your codeforces history. ">
+<meta name="description" content="We challenge you to solve these Contests. Improve your skills while practicing with us. We suggest contests based on your problem solving history on codeforces. ">
 <link rel="stylesheet" type="text/css" href="{% static 'core/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css' %}"/>
 {% endblock %}
 {% block content %}
-<h1 style="display: none;">Codeforces Viewer Contests Suggestor</h1>
+<h1 style="display: none;">Codeforces Viewer Contests Recommender</h1>
 <div class="page-wrapper">
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-7 align-self-center">
-                <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Random Contest Suggestor</h4>
+                <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Recommended Contests</h4>
                 <div class="d-flex align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb m-0 p-0">
                             <li class="breadcrumb-item"><a href="index.html" class="text-muted">Try something different</a></li>
-                            <li class="breadcrumb-item text-muted active" aria-current="page">Random Contest</li>
+                            <li class="breadcrumb-item text-muted active" aria-current="page">Suggested Contests</li>
                         </ol>
                     </nav>
                 </div>
@@ -77,7 +77,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Random Contests</h4>
+                        <h4 class="card-title">Recommended Contests</h4>
                         <h6 class="card-subtitle">All the Contests listed below are unattempted and can improve your perfomance. After completion of this problems, you can refresh the page and get new contests.</h6>
                         <div class="table-responsive">
                             <table
