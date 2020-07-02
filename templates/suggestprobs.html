@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}CFViewer Suggestor{% endblock %}
+{% block title %}CFViewer Problems Recommender{% endblock %}
 {% block head %}
 <meta name="description" content="Try these problems to improve your competitive programming skills. Problem suggestor based on your codeforces submissions history. Get filters suggestion.">
 <link rel="stylesheet" type="text/css" href="{% static 'core/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css' %}"/>
 {% endblock %}
 {% block content %}
-<h1 style="display: none;">Codeforces Viewer Problems Suggestor</h1>
+<h1 style="display: none;">Codeforces Viewer Problems Recommender</h1>
 <div class="page-wrapper">
     <div class="page-breadcrumb">
         <div class="row">
@@ -16,7 +16,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb m-0 p-0">
                             <li class="breadcrumb-item"><a href="index.html" class="text-muted">Try something different</a></li>
-                            <li class="breadcrumb-item text-muted active" aria-current="page">Random Problem</li>
+                            <li class="breadcrumb-item text-muted active" aria-current="page">Suggested Problems</li>
                         </ol>
                     </nav>
                 </div>
@@ -29,7 +29,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title">Filters suggested by CFViewer</div>
-                    <div class="card-subtitle">Our algorithm suggests you to try this filters to improve you perfomance. Below mentioned numbers are suggested on the basis of your submissions history on codeforces.</div>
+                    <div class="card-subtitle">Our algorithm suggests you to try this filters to improve you perfomance. Below mentioned filters are suggested on the basis of your submissions history on codeforces.</div>
                         <div class="row">
                             <!-- Column -->
                             <div class="col-md-6 col-lg-3 col-xlg-3">
@@ -76,7 +76,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Random Problems</h4>
+                        <h4 class="card-title">Recommended Problems</h4>
                         <h6 class="card-subtitle">All the problems listed below are unattempted and can improve your perfomance. After completion of this problems, you can refresh the page and get new problems.</h6>
                         <p><button type="button" class="btn waves-effect waves-light btn-rounded btn-dark" id="show_tags_button">Show Tags</button></p>
                         
