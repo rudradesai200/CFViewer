@@ -1,5 +1,13 @@
 from django.db import models
 from django.core.validators import RegexValidator
+from django.contrib.auth.models import User
+
+class Coderproxy(models.Model):
+    username = models.CharField(unique=True,max_length=100)
+    register_token = models.CharField(max_length=8)
+    time_registered = models.DateTimeField()
+    email = models.EmailField()
+    registered = models.BooleanField(default=False)
 
 class Contests(models.Model):
     contid = models.IntegerField()
@@ -32,3 +40,10 @@ class Invitees(models.Model):
     currtime = models.TimeField(auto_now=True)
     def __str__(self):
         return self.cfhandle
+
+class Pvpinvite(models.Model):
+    host = models.CharField(max_length=100)
+    invitee = models.CharField(max_length=100)
+    token = models.CharField(max_length=8)
+    time = models.DateTimeField()
+    status = models.CharField(default="pending",max_length=100)

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}PvP battle{% endblock %}
+{% block content %}
+    <h1 style="display: none;">PvP Coding battle</h1>
+    <div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-7 align-self-center">
+                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Hello 
+                        {% if user.firstName %}
+                            {{user.firstName}}
+                        {% else %}
+                            {{user.handle}}
+                        {% endif %}
+                            !</h3>
+                    <div class="d-flex align-items-center">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb m-0 p-0">
+                                <li class="breadcrumb-item"><a href="index.html">PvP Home</a>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="text" placeholder="Friend's username" name="friend">
+                    <input type="submit" value="submit">
+                </form>
+            </div>
+        </div>
+        <div class="container">
+            {% comment %} <div class="row"> {% endcomment %}
+                <h2>Received invites</h2>
+                <table>
+                    <tr><th>Host</th><th>Time</th></tr>
+                    {% for inv in received %}
+                    <tr><td>{{inv.host}}</td><td>{{inv.time}}</td></tr>
+                    {% endfor %}
+                </table>
+            {% comment %} </div> {% endcomment %}
+        </div>
+        <div class="container">
+            {% comment %} <div class="row"> {% endcomment %}
+                <h2>Sent invites</h2><br>
+                <table>
+                    <tr><th>Invitees</th><th>Time</th></tr>
+                    {% for inv in sent %}
+                    <tr><td>{{inv.host}}</td><td>{{inv.time}}</td></tr>
+                    {% endfor %}
+                </table>
+            {% comment %} </div> {% endcomment %}
+        </div>
+
+    </div>
+{% endblock %}

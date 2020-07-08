@@ -1,11 +1,16 @@
 # Django Libraries
 from django.shortcuts import render,redirect, HttpResponseRedirect
 from django.contrib import messages
+from core.models import *
+from django.core.mail import send_mail, BadHeaderError, EmailMessage
+from django.conf import settings
 
 # Python Libraries 
 import requests
 from collections import OrderedDict
 import time
+import random
+import string
 
 def userinfo(request,handle):
     '''
@@ -144,3 +149,38 @@ def getcharts(request,handle):
     m,mtag,msubs,prbcnt,_ = submissiongen(request,handle)
     ranklist,contids,days = ratingchange(request,handle)
     return (user,m,mtag,msubs,prbcnt,ranklist,contids,days)
+
+def getCoder(request,cfid):
+    return Coder.objects.filter(username=cfid)
+
+def emailsend(request,emailid,message,subject):
+    """Sends email"""
+    # Customer details
+
+    # Mail configuration
+    mailfrom = settings.EMAIL_HOST_USER
+
+    # Email make
+    email = EmailMessage(
+        subject,
+        message,
+        mailfrom,
+        to = [emailid],
+        reply_to=[mailfrom],
+    )
+
+    # Email send
+    try:
+        email.send(fail_silently=False)
+    except BadHeaderError:
+        messages.error(request,"Invalid Header found")
+        return False
+
+    return True
+
+def createRandomToken(request):
+    token = ""
+    source = string.ascii_lowercase + string.ascii_uppercase + string.digits
+    for i in range(8):
+        token += random.choice(source)
+    return token

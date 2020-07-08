@@ -1,0 +1,3 @@
+Send friend, a mail for registration
+Check for multiple invites
+Delete accepted invites or not?
