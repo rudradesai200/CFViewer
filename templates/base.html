@@ -35,6 +35,8 @@
 		<!-- Other head files -->
 		{% block head %}{% endblock %}
 
+		
+
 	</head>
 	<body>
 		{% block bodytop %}{% endblock %}
@@ -46,15 +48,15 @@
 			</div>
 		</div>
 		
-		
 		<!-- Messages -->
 		{% if messages %}
-		{% for message in messages %}
 		<script>
-			alert('{{ message }}');
-		</script>
+		{% for message in messages %}
+			alert('{{ message }}')
 		{% endfor %}
+		</script>
 		{% endif %}
+		
 		
 		<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
 		data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
@@ -88,10 +90,5 @@
 		<!-- User scripts -->
 		{% block scripts %}
 		{% endblock %}
-
-		<!-- Go to www.addthis.com/dashboard to customize your tools -->
-		<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5ea429a9d03a73b9"></script>
-
-
 	</body>
 </html>

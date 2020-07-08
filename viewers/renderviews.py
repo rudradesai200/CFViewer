@@ -215,7 +215,7 @@ def friendsunsolved(request):
     except:
         x = user['handle']
     if x == "Guest":
-        messages.error(request,"You need to login in before comparing")
+        messages.error(request,"You need to log in before comparing")
         return redirect("/cfviewer/") 
     
     friend = request.GET['friend']

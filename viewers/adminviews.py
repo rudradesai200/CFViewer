@@ -10,15 +10,15 @@ from core.models import Contests, Problems, Invitees
 import requests
 import json
 
-@staff_member_required
-def acceptinvite(request,handle,stat):
-    inv = Invitees.objects.filter(cfhandle=handle)
-    if len(inv) == 0:
-        messages.error(request,"Handle not in db")
-        return redirect("/cfviewer/invite/{}/".format(handle))
-    else:
-        inv[0].status = stat
-        inv[0].save()
-        messages.success(request,"User found and status changed")
-        return redirect("/cfviewer/invite/{}/".format(handle))
+# @staff_member_required
+# def acceptinvite(request,handle,stat):
+#     inv = Invitees.objects.filter(cfhandle=handle)
+#     if len(inv) == 0:
+#         messages.error(request,"Handle not in db")
+#         return redirect("/cfviewer/invite/{}/".format(handle))
+#     else:
+#         inv[0].status = stat
+#         inv[0].save()
+#         messages.success(request,"User found and status changed")
+#         return redirect("/cfviewer/invite/{}/".format(handle))
 
