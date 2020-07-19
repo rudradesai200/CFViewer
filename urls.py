@@ -18,7 +18,6 @@ from django.conf.urls import handler404
 from core.viewers.renderviews import *
 from core.viewers.adminviews import *
 from core.viewers.staticviews import *
-from core.viewers.pvpbattle import *
 
 urlpatterns = [
     url(r'^dashboard/',dashboard,name="dashboard"),
@@ -30,12 +29,7 @@ urlpatterns = [
     url(r'^suggest/(?P<slug>.*)/',suggestor,name="suggestor"),
     url(r'^invite/(?P<handle>.*)/',foobarinvite,name="foobarinvite"),
     url(r'^change/(?P<handle>.*)/(?P<stat>.*)/',acceptinvite,name="invitestatuschange"),
-    # url(r'^adspage/',adspage,name="adspage"),
-    url(r'^pvplogin/(?P<handle>.*)/',pvplogin,name="pvplogin"),
-    url(r'^setpassword/(?P<handle>[^\/]*)/(?P<token>.*)/',setpassword,name="setpassword"),
-    url(r'^pvpinvite/(?P<handle>.*)/',pvpinvite,name="pvpinvite"),
-    url(r'^pvpbattle/(?P<handle>[^\/]*)/(?P<token>.*)/',pvpbattle,name="pvpbattle"),
-    url(r'^acceptinvite/(?P<handle>[^\/]*)/(?P<token>.*)/',acceptinvite,name="accept_invite"),
+    url(r'^adspage/',adspage,name="adspage"),
     url(r'^',home,name="home"),
 ]
 

@@ -133,7 +133,7 @@ def problems(request):
         ratingmin = max(min(user['maxRating'] - 100,3000),0)
     except:
         ratingmin = 0
-
+    show_tags = False
     taglist = None
     filterform = ProblemFilterForm()
     if request.method == "POST":
@@ -144,11 +144,13 @@ def problems(request):
             ratingmax = filterform.cleaned_data.get('ratingmax')
             tags = filterform.cleaned_data.get('tags')
             taglist = tags.split(',')
+            show_tags = filterform.cleaned_data.get('show_tags')
         else:
             print(filterform.errors)
             messages.error(request,"Invalid values provided")
             # return redirect("/cfviewer/")
     
+
     if (ratingmax == None) and (ratingmin == None):
         try:
             ratingmax = min(user['maxRating'] + 300,3500)
@@ -187,7 +189,8 @@ def problems(request):
             types.append("unsolved")
         final.append(x)
     prbs = zip(final,color,types)
-    return render(request,"problems.html",context={"problems":prbs,'filterform':filterform,'user':user})
+    print(show_tags)
+    return render(request,"problems.html",context={"problems":prbs,'filterform':filterform,'user':user,'show_tags':show_tags})
 
 def friendsunsolved(request):
     '''
@@ -215,7 +218,7 @@ def friendsunsolved(request):
     except:
         x = user['handle']
     if x == "Guest":
-        messages.error(request,"You need to log in before comparing")
+        messages.error(request,"You need to login in before comparing")
         return redirect("/cfviewer/") 
     
     friend = request.GET['friend']
