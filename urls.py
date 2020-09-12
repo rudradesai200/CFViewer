@@ -27,9 +27,9 @@ urlpatterns = [
     url(r'^contests/',contests,name="contests"),
     url(r'^friends/',friendsunsolved,name="friendsunsolved"),
     url(r'^suggest/(?P<slug>.*)/',suggestor,name="suggestor"),
-    url(r'^invite/(?P<handle>.*)/',foobarinvite,name="foobarinvite"),
-    url(r'^change/(?P<handle>.*)/(?P<stat>.*)/',acceptinvite,name="invitestatuschange"),
-    url(r'^adspage/',adspage,name="adspage"),
+    # url(r'^invite/(?P<handle>.*)/',foobarinvite,name="foobarinvite"),
+    # url(r'^change/(?P<handle>.*)/(?P<stat>.*)/',acceptinvite,name="invitestatuschange"),
+    # url(r'^adspage/',adspage,name="adspage"),
     url(r'^',home,name="home"),
 ]
 

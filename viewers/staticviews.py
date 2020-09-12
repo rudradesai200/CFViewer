@@ -47,20 +47,20 @@ def error_404_view(request, exception):
     return render(request,"404.html",context=None)
 
 
-def adspage(request):
-    '''
-        @type: staticpagerender ;
-        @return: renders page ;
-        @description:
-            A page which shows different types of ads;
-        @errorhandling:
-            ;
-    '''
-    try:
-        handle = request.GET['handle']
-    except:
-        handle =""
+# def adspage(request):
+#     '''
+#         @type: staticpagerender ;
+#         @return: renders page ;
+#         @description:
+#             A page which shows different types of ads;
+#         @errorhandling:
+#             ;
+#     '''
+#     try:
+#         handle = request.GET['handle']
+#     except:
+#         handle =""
     
-    user = userinfo(request,handle)
-    messages.success(request,"Thanks for clicking on this button. Now you will see an ads page. Please read the information before clicking anywhere.")
-    return render(request,"adspage.html",context={"user":user})
+#     user = userinfo(request,handle)
+#     messages.success(request,"Thanks for clicking on this button. Now you will see an ads page. Please read the information before clicking anywhere.")
+#     return render(request,"adspage.html",context={"user":user})
