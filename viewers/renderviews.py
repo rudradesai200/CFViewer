@@ -479,56 +479,56 @@ def submissionsviewer(request,handle,contid):
 
     return render(request,"submissions.html",context={"handle":handle,"contest":contid,'subs':nids,"user":user})
 
-def foobarinvite(request,handle):
-    '''
-        @type: render function ;
-        @return: render view ;
-        @description:
-            It is made for foobar invite form acceptance; 
-        @errorhandling:
-            ;
-    '''
-    user = userinfo(request,handle)
-    if len(Invitees.objects.filter(cfhandle = handle)) == 0:
-        inviteform = InviteForm()
-    else:
-        inviteform = None
-    currlist = Invitees.objects.all().order_by("id")
-    if request.method == "POST":
-        inviteform = InviteForm(request.POST)
-        if inviteform.is_valid():
-            cfhandle = inviteform.cleaned_data.get("cfhandle")
-            if(cfhandle != handle):
-                messages.error(request,"You cannot invite other users. You can only add your handle to the list")
-                return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
+# def foobarinvite(request,handle):
+#     '''
+#         @type: render function ;
+#         @return: render view ;
+#         @description:
+#             It is made for foobar invite form acceptance; 
+#         @errorhandling:
+#             ;
+#     '''
+#     user = userinfo(request,handle)
+#     if len(Invitees.objects.filter(cfhandle = handle)) == 0:
+#         inviteform = InviteForm()
+#     else:
+#         inviteform = None
+#     currlist = Invitees.objects.all().order_by("id")
+#     if request.method == "POST":
+#         inviteform = InviteForm(request.POST)
+#         if inviteform.is_valid():
+#             cfhandle = inviteform.cleaned_data.get("cfhandle")
+#             if(cfhandle != handle):
+#                 messages.error(request,"You cannot invite other users. You can only add your handle to the list")
+#                 return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
 
-            if(len(Invitees.objects.filter(cfhandle = cfhandle)) != 0):
-                messages.error(request,"You are already there on the list")
-                return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
+#             if(len(Invitees.objects.filter(cfhandle = cfhandle)) != 0):
+#                 messages.error(request,"You are already there on the list")
+#                 return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
             
-            r = requests.get('https://codeforces.com/api/user.info?handles={}'.format(cfhandle)).json()
-            if(r['status']!="OK"):
-                messages.error(request,"User not found. Please try again")
-                return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
-            if(r['result'][0]['rating'] < 1500):
-                messages.error(request,"Your rating needs to be atleast 1500 for getting an invite")
-                return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
-            inv = inviteform.save(commit=True)
-            inv.status = 0
-            inv.save()
-            messages.success(request,"Added to list")
-        else:
-            print(inviteform.errors)
-            messages.error(request,"Data invalid.Please try again")
-            return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
+#             r = requests.get('https://codeforces.com/api/user.info?handles={}'.format(cfhandle)).json()
+#             if(r['status']!="OK"):
+#                 messages.error(request,"User not found. Please try again")
+#                 return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
+#             if(r['result'][0]['rating'] < 1500):
+#                 messages.error(request,"Your rating needs to be atleast 1500 for getting an invite")
+#                 return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
+#             inv = inviteform.save(commit=True)
+#             inv.status = 0
+#             inv.save()
+#             messages.success(request,"Added to list")
+#         else:
+#             print(inviteform.errors)
+#             messages.error(request,"Data invalid.Please try again")
+#             return render(request,"invites.html",context={"user":user,"inviteform":inviteform,"currlist":currlist})
     
-    if len(Invitees.objects.filter(cfhandle = handle)) == 0:
-        inviteform = InviteForm()
-    else:
-        inviteform = None
-    currlist = Invitees.objects.all().order_by("id")
-    return render(request,"invites.html",context={
-        "user":user,
-        "inviteform":inviteform,
-        "currlist":currlist,
-    })
+#     if len(Invitees.objects.filter(cfhandle = handle)) == 0:
+#         inviteform = InviteForm()
+#     else:
+#         inviteform = None
+#     currlist = Invitees.objects.all().order_by("id")
+#     return render(request,"invites.html",context={
+#         "user":user,
+#         "inviteform":inviteform,
+#         "currlist":currlist,
+#     })

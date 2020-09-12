@@ -21,12 +21,12 @@ class SuggestViewSitemap(sitemaps.Sitemap):
     def location(self,item):
         return reverse('suggestor',args=[item])
 
-class FoobarinviteSitemap(sitemaps.Sitemap):
-    priority = 0.7
-    changefreq = 'yearly'
+# class FoobarinviteSitemap(sitemaps.Sitemap):
+#     priority = 0.7
+#     changefreq = 'yearly'
 
-    def items(self):
-        return ['cs18b012']
+#     def items(self):
+#         return ['cs18b012']
     
-    def location(self,item):
-        return reverse('foobarinvite',args=[item])
+#     def location(self,item):
+#         return reverse('foobarinvite',args=[item])
