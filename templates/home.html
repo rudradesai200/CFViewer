@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+{% load static %}
+<html dir="ltr" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CFViewer Home</title>
+    <meta name="description" content="Competitive Programming Skills improver , Good Problems Suggestor. Good Virtual Contests suggestor. Good books. Compare with your friend. Track your progress.">
+    <meta name="author" content="Rudra Desai">
+
+    <meta property="og:title" content="Codeforces Viewer and Suggestor">
+    <meta property="og:site_name" content="CFViewer">
+    <meta property="og:url" content="http://www.rudradesai.in/cfviewer">
+    <meta property="og:description" content="Codeforces Rating Improver , Problemset Viewer, Contests list viewer and much more. Try your friends unsolved problems. Get some good CP books.">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'core/assets/images/favicon/apple-icon-57x57.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'core/assets/images/favicon/apple-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'core/assets/images/favicon/apple-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'core/assets/images/favicon/apple-icon-76x76.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'core/assets/images/favicon/apple-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'core/assets/images/favicon/apple-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'core/assets/images/favicon/apple-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'core/assets/images/favicon/apple-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'core/assets/images/favicon/apple-icon-180x180.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{% static 'core/assets/images/favicon/android-icon-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/assets/images/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'core/assets/images/favicon/favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'core/assets/images/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'core/assets/images/favicon/manifest.json' %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{% static 'core/assets/images/favicon/ms-icon-144x144.png' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'core/assets/images/favicon.png' %}">
+    <link href="{% static 'core/dist/css/style.min.css' %}" rel="stylesheet">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163666958-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-163666958-1');
+    </script>
+    
+</head>
+<body>
+    <h1 style="display: none;">Codeforces Viewer Home</h1>
+    <!-- Messages -->
+		{% if messages %}
+		{% for message in messages %}
+		<script>
+			alert('{{ message }}');
+		</script>
+		{% endfor %}
+        {% endif %}
+    <div class="main-wrapper">
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
+        </div>
+        
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
+            style="background:url({% static 'core/assets/images/big/auth-bg.jpg' %}) no-repeat center center;background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            position: relative;">
+            <div class="auth-box row">
+                <div class="col-lg-7 col-md-5 modal-bg-img" style="background-image: url({% static 'core/assets/images/big/bg1.jpg' %});">
+                </div>
+                <div class="col-lg-5 col-md-7 bg-white">
+                    <div class="p-3">
+                        <div class="text-center">
+                            <img src="{% static 'core/assets/images/big/icon.png' %}" alt="wrapkit">
+                        </div>
+                        <h2 class="mt-3 text-center">Handle</h2>
+                        <p class="text-center">Enter your Codeforces handle to continue.</p>
+                        <form class="mt-4" method="GET" action="/cfviewer/dashboard/">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="text-dark" for="handle">Handle</label>
+                                        <input class="form-control" name="handle" id="handle" type="text"
+                                            placeholder="enter your cf handle">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 text-center">
+                                    <button type="submit" class="btn btn-block btn-dark">Continue</button>
+                                </div>
+                                <div class="col-lg-12 text-center mt-5">
+                                    Continue anonymously <a href="/cfviewer/dashboard/?handle=" class="text-danger">Link</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer text-center text-muted">
+        Backend made with love by <a href="https://www.linkedin.com/in/rudradesai">Rudra Desai . Template design by WrapPixel.
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+        $(".preloader ").fadeOut();
+    </script>
+</body>
+</html>
