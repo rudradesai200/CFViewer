@@ -27,7 +27,10 @@ urlpatterns = [
     url(r'^contests/',contests,name="contests"),
     url(r'^friends/',friendsunsolved,name="friendsunsolved"),
     url(r'^suggest/(?P<slug>.*)/',suggestor,name="suggestor"),
+<<<<<<< HEAD
     url(r'^pluginload/(?P<slug>.*)/(?P<handle>.*)/',plugin_load,name="plugin_suggestor"),
+=======
+>>>>>>> fc6335a1eca36dc9a1435209dc5a0961955b6f84
     # url(r'^invite/(?P<handle>.*)/',foobarinvite,name="foobarinvite"),
     # url(r'^change/(?P<handle>.*)/(?P<stat>.*)/',acceptinvite,name="invitestatuschange"),
     # url(r'^adspage/',adspage,name="adspage"),

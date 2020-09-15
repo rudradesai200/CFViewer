@@ -1,15 +1,22 @@
 # Django Libraries
 from django.shortcuts import render,redirect, HttpResponseRedirect
+<<<<<<< HEAD
 from django.http import JsonResponse
 from django.contrib import messages
 from core.models import Contests, Problems
+=======
+from django.contrib import messages
+>>>>>>> fc6335a1eca36dc9a1435209dc5a0961955b6f84
 
 # Python Libraries 
 import requests
 from collections import OrderedDict
 import time
+<<<<<<< HEAD
 import random
 import numpy
+=======
+>>>>>>> fc6335a1eca36dc9a1435209dc5a0961955b6f84
 
 def userinfo(request,handle):
     '''
@@ -147,6 +154,7 @@ def getcharts(request,handle):
     user = userinfo(request,handle)
     m,mtag,msubs,prbcnt,_ = submissiongen(request,handle)
     ranklist,contids,days = ratingchange(request,handle)
+<<<<<<< HEAD
     return (user,m,mtag,msubs,prbcnt,ranklist,contids,days)
 
 def suggestor_helper(request,slug, handle):
@@ -276,3 +284,6 @@ def plugin_load(request,slug,handle):
                     
     # print(result)
     return JsonResponse(result)
+=======
+    return (user,m,mtag,msubs,prbcnt,ranklist,contids,days)
+>>>>>>> fc6335a1eca36dc9a1435209dc5a0961955b6f84

@@ -357,6 +357,7 @@ def suggestor(request,slug):
     except:
         handle=""
 
+<<<<<<< HEAD
     status,context = suggestor_helper(request,slug,handle)
 
     if(status == "success"):
@@ -368,6 +369,97 @@ def suggestor(request,slug):
 
     messages.error(request,context['msg'])
     return redirect("/cfviewer/")
+=======
+    if slug == "problem":
+        user = userinfo(request,handle)
+        try:
+            ratingmax = min(user['maxRating'] + 300,3500)
+        except:
+            ratingmax = 1000
+        try:
+            ratingmin = max(min(user['maxRating'] - 100,3000),0)
+        except:
+            ratingmin = 500
+        try:
+            m,_,_,prbcnt,L = submissiongen(request,handle)
+            rats = []
+            prbnames = []
+            for x in L:
+                prbnames.append(x['problem']['name'])
+                try:
+                    rats.append(x['problem']['rating'])
+                except:
+                    pass
+            rats = sorted(rats)
+            valr = (4*prbcnt)/5
+            temp = 0
+            for x in m.keys():
+                if (temp + m[x]) > valr:
+                    ind = x
+                    break
+                else:
+                    temp += m[x]
+            
+            maxindex=chr(min(ord(ind) + 1,ord("H")))
+            minindex=ind
+            # ratingmax = rats[-1]+100
+            ratingmin = rats[int((4*len(rats))/5) - 1]
+        except:
+            user = userinfo(request,handle)
+            prbnames = []
+            minindex = "A"
+            maxindex = "B"
+        ratingmax = ratingmin + 500
+        prbs = Problems.objects.filter(rating__gte=ratingmin,rating__lte=ratingmax,index__isnull=False,index__lte=maxindex,index__gte=minindex)
+        for x in prbnames:
+            prbs.exclude(name=x)
+        prbs = list(prbs)
+        random.shuffle(prbs)
+        prbs = prbs[0:min(10,len(prbs))]
+        return render(request,"suggestprobs.html",context={"user":user,"prbs":prbs,"minindex":minindex,"maxindex":maxindex,"ratingmax":ratingmax,"ratingmin":ratingmin})
+    else:
+        if slug == "contest":
+            user=userinfo(request,handle)
+            try:
+                _,contids,_ = ratingchange(request,handle)
+
+                diffs = []
+                for x in contids:
+                    try:
+                        diffs.append(Contests.objects.get(contid=x).difficulty)
+                    except:
+                        pass
+
+                if len(diffs) != 0:
+                    diffs = numpy.array(diffs)
+                    mindiff = int(numpy.mean(diffs))
+                    maxdiff = int(min(mindiff + 2,10))
+                else:
+                    mindiff = 0
+                    maxdiff = 10
+                if len(contids) != 0:
+                    nids = set(contids)
+                else:
+                    nids = []
+            except:
+                contids = []
+                mindiff = 0
+                maxdiff = 10
+                nids = []
+            c = Contests.objects.filter(difficulty__gte=mindiff,difficulty__lte=maxdiff)
+            for x in nids:
+                try:
+                    c.exclude(contid=x)
+                except:
+                    pass
+            c = list(c)
+            random.shuffle(c)
+            c = c[:min(10,len(c))]
+            return render(request,"suggestconts.html",context={"contests":c,"user":user,"mindiff":mindiff,"maxdiff":maxdiff})
+        else:
+            messages.error(request,"URL error. Please try again")
+            return redirect("/cfviewer/")
+>>>>>>> fc6335a1eca36dc9a1435209dc5a0961955b6f84
 
 def submissionsviewer(request,handle,contid):  
     '''
