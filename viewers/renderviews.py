@@ -146,7 +146,7 @@ def problems(request):
             taglist = tags.split(',')
             show_tags = filterform.cleaned_data.get('show_tags')
         else:
-            print(filterform.errors)
+            # print(filterform.errors)
             messages.error(request,"Invalid values provided")
             # return redirect("/cfviewer/")
     
@@ -361,7 +361,7 @@ def suggestor(request,slug):
 
     if(status == "success"):
         if(slug == "problem"):
-            print(context['prbs'])
+            # print(context['prbs'])
             return render(request,"suggestprobs.html",context=context)
         elif(slug == "contest"):
             return render(request,"suggestconts.html",context=context)

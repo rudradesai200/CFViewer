@@ -36,6 +36,8 @@ class Problems(models.Model):
 class CFUsers(models.Model):
     page_visits = models.IntegerField(default=0)
     handle = models.CharField(max_length=100)
+    referer = models.TextField(default="")
+    page = models.TextField(default="")
 
     def __str__(self):
         return self.handle

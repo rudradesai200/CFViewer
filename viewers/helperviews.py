@@ -42,8 +42,14 @@ def userinfo(request,handle):
                 user = users[0]
             
             user.page_visits += 1
-            user.save()
+            
+            user.page += "\n" + request.path
+            try:
+                user.referer += "\n" + request.META['HTTP_REFERER']
+            except:
+                pass
 
+            user.save()
             try:
                 x = res['firstName']
             except:
