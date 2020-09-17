@@ -23,12 +23,19 @@ class Problems(models.Model):
     def __str__(self):
         return self.name
     
-class Invitees(models.Model):
-    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed and with a country code")
-    cfhandle = models.CharField(max_length=100)
-    emailid = models.EmailField(max_length=100)
-    status = models.IntegerField(null=True,blank=True)
-    mobile = models.CharField(validators=[phone_regex], max_length=17, blank=True, null=True) # validators should be a list
-    currtime = models.TimeField(auto_now=True)
+# class Invitees(models.Model):
+#     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed and with a country code")
+#     cfhandle = models.CharField(max_length=100)
+#     emailid = models.EmailField(max_length=100)
+#     status = models.IntegerField(null=True,blank=True)
+#     mobile = models.CharField(validators=[phone_regex], max_length=17, blank=True, null=True) # validators should be a list
+#     currtime = models.TimeField(auto_now=True)
+#     def __str__(self):
+#         return self.cfhandle
+
+class CFUsers(models.Model):
+    page_visits = models.IntegerField(default=0)
+    handle = models.CharField(max_length=100)
+
     def __str__(self):
-        return self.cfhandle
+        return self.handle

@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 
 # User defined
-from core.models import Contests, Problems, Invitees
+from core.models import Contests, Problems
 
 # Python library
 import requests

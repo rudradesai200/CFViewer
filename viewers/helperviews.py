@@ -2,7 +2,7 @@
 from django.shortcuts import render,redirect, HttpResponseRedirect
 from django.http import JsonResponse
 from django.contrib import messages
-from core.models import Contests, Problems
+from core.models import Contests, Problems, CFUsers
 
 # Python Libraries 
 import requests
@@ -33,6 +33,17 @@ def userinfo(request,handle):
         if r['status'] == "OK":
             res = r['result'][0]
             x = ""
+
+            users = CFUsers.objects.filter(handle=res['handle'])
+            if(len(users) == 0):
+                user = CFUsers(handle=res['handle'])
+                user.save()
+            else:
+                user = users[0]
+            
+            user.page_visits += 1
+            user.save()
+
             try:
                 x = res['firstName']
             except:

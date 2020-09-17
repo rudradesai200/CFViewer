@@ -3,8 +3,8 @@ from django.shortcuts import render,redirect, HttpResponseRedirect
 from django.contrib import messages
 
 # User Defined
-from core.models import Contests, Problems, Invitees
-from core.forms import ProblemFilterForm, InviteForm
+from core.models import Contests, Problems
+from core.forms import ProblemFilterForm
 from core.viewers.helperviews import *
 
 #Python Libraries
