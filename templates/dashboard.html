@@ -79,12 +79,16 @@
     </script>
 {% endblock %}
 {% block content %}
+
 <h1 style="display: none;">Codeforces Viewer Dashboard</h1>
         <div class="page-wrapper">
+
             <div class="page-breadcrumb">
                 <div class="row">
+
+                    <!-- Modal HTML embedded directly into document -->
                     <div class="col-7 align-self-center">
-                        <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Hello 
+                        <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Hello
                             {% if user.firstName %}
                                 {{user.firstName}}
                             {% else %}
@@ -103,9 +107,25 @@
                 </div>
             </div>
             {% comment %} <div class="container-fluid"> {% endcomment %}
-                
+
             {% comment %} </div> {% endcomment %}
             <div class="container-fluid">
+                <div id="ex3" class="alert alert-info modal" style="display: none; margin-top: 10%; height: auto;">
+                    <p>
+                            <h2><b><u>Please don't ignore this message</u></b></h2>
+                            <h3>A big thanks for using my project!</h3> I hope you like it.
+                            <br><br>
+
+                            Please consider donating to keep this project running. I have run out of funds to host this website on AWS.
+                            If I will get enough donations, I will move this site to a new domain - cfviewer.com.<br><br>
+                            Even donations as small as <b>Rs. 100</b> will help me to serve it without ads.<br><br>
+                            You can send your donations on <b>upi-id:rudrad200@icici</b> or <b>paytm:8401219589</b>.
+                            <br>
+
+                    </p>
+                </div>
+                  <!-- Link to open the modal -->
+                  <p><a href="#ex3" id="ext3link" rel="modal:open" style="display: none;">Open Modal</a></p>
             <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
                         role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -120,7 +140,7 @@
                     </button>
                     <strong>Note : </strong> If the charts below, doesnt appear properly , then please refresh to view it!
                 </div>
-                
+
                 <div class="card-group">
                     <div class="card border-right">
                         <div class="card-body">
@@ -221,4 +241,16 @@
 {% endblock %}
 {% block scripts %}->
     <script src="{% static 'core/dist/js/pages/dashboards/dashboard1.min.js' %}" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <script>
+        $(document).ready(function(){
+   // Delay the action by 10000ms
+        setTimeout(function(){
+            // Display the div containing the class "bottomdiv"
+            $("#ext3link").trigger("click");
+        }, 2000);
+        });
+
+    </script>
 {% endblock %}

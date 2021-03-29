@@ -31,7 +31,7 @@
 			gtag('js', new Date());
 			gtag('config', 'UA-163666958-1');
 		</script>
-		
+
 		<!-- Sharethis api-->
 		<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f786c5d4196f10012b84ba1&product=sop' async='async'></script>
 
@@ -40,16 +40,16 @@
 
 	</head>
 	<body>
-		{% block bodytop %}{% endblock %}
 		<!--Pre loader-->
+		{% block bodytop %}{% endblock %}
 		<div class="preloader">
 			<div class="lds-ripple">
 				<div class="lds-pos"></div>
 				<div class="lds-pos"></div>
 			</div>
 		</div>
-		
-		
+
+
 		<!-- Messages -->
 		{% if messages %}
 		{% for message in messages %}
@@ -58,10 +58,10 @@
 		</script>
 		{% endfor %}
 		{% endif %}
-		
+
 		<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
 		data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
-		
+
 		<!-- Navbar -->
 		{% include 'includes/nav.html' %}
 
@@ -81,12 +81,12 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" integrity="sha256-XfzdiC+S1keia+s9l07y7ye5a874sBq67zK4u7LTjvk=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js" integrity="sha256-BuAkLaFyq4WYXbN3TFSsG1M5GltEeFehAMURi4KBpUM=" crossorigin="anonymous"></script>
-		
+
 		<!-- Other scripts -->
 		<script src="{% static 'core/dist/js/app-style-switcher.min.js' %}" ></script>
 		<script src="{% static 'core/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js' %}" ></script>
 		<script src="{% static 'core/dist/js/sidebarmenu.min.js' %}" ></script>
-		<script src="{% static 'core/dist/js/custom.min.js' %}" ></script>	
+		<script src="{% static 'core/dist/js/custom.min.js' %}" ></script>
 
 		<!-- User scripts -->
 		{% block scripts %}
