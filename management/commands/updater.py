@@ -1,12 +1,14 @@
 from django.core.management.base import BaseCommand, CommandError
-from core.viewers.adminviews import fetchcontests, fetchproblems
+from django.db.transaction import atomic
 
 # User defined
-from core.models import Contests, Problems, Invitees
+from core.models import Contests, Problems
 
 # Python library
 import requests
 import json
+import tqdm
+
 def fetchcontests(self):
     '''
         @type: adminfunction;
@@ -22,14 +24,14 @@ def fetchcontests(self):
     '''
     try:
         r = requests.get('https://codeforces.com/api/contest.list?gym=false')
-        json = r.json()
+        jsond = r.json()
     except:
         # messages.error(request,"Codeforces unavailable")
         self.stdout.write(self.style.ERROR('Codeforces unavailable'))
         # return redirect("/cfviewer/")
 
-    if json['status'] == "OK":
-        results = json['result']
+    if jsond['status'] == "OK":
+        results = jsond['result']
         c = Contests.objects.all()
         Contests.objects.filter(phase="BEFORE").delete()
         obj = c.filter(difficulty=10)[0]
@@ -46,7 +48,7 @@ def fetchcontests(self):
             # messages.error(request,"10 diff object not found")
             # return redirect("/cfviewer/")
         i = 1
-        for res in results:
+        for res in tqdm.tqdm(results):
             # print("Storing contest {} out of {}".format(i,len(results)))
             i += 1
             if(len(c.filter(contid=res['id'])) != 0):
@@ -104,7 +106,7 @@ def fetchproblems(self):
     problemsstats = results['problemStatistics']
     p = Problems.objects.all()
     i = 1
-    for (x,y) in zip(problems,problemsstats):
+    for (x,y) in tqdm.tqdm(zip(problems,problemsstats)):
         # print("{} out of {}".format(i,len(problems)))
         i += 1
         if(len(p.filter(name=x['name'])) != 0):
@@ -126,6 +128,7 @@ def fetchproblems(self):
 class Command(BaseCommand):
     help = "Updates Problems List and Contests List"
 
+    @atomic()
     def handle(self, *args, **options):
         fetchcontests(self)
         fetchproblems(self)

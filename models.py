@@ -38,6 +38,7 @@ class CFUsers(models.Model):
     handle = models.CharField(max_length=100)
     referer = models.TextField(default="")
     page = models.TextField(default="")
+    last_seen = models.DateTimeField(null=True)
 
     def __str__(self):
         return self.handle

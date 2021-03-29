@@ -20,14 +20,14 @@ from core.viewers.adminviews import *
 from core.viewers.staticviews import *
 
 urlpatterns = [
-    url(r'^dashboard/',dashboard,name="dashboard"),
-    url(r'^showbooks/',showbooks,name="books"),
-    url(r'^subs/(?P<handle>.*)/(?P<contid>.*)/',submissionsviewer,name="subsviewer"),
-    url(r'^problems/',problems,name="problems"),
-    url(r'^contests/',contests,name="contests"),
+    url(r'^dashboard/(?P<handle>[^/]*)/',dashboard,name="dashboard"),
+    url(r'^showbooks/(?P<handle>[^/]*)/',showbooks,name="books"),
+    url(r'^subs/(?P<handle>[^/]*)/(?P<contid>[^/]*)/',submissionsviewer,name="subsviewer"),
+    url(r'^problems/(?P<handle>[^/]*)/',problems,name="problems"),
+    url(r'^contests/(?P<handle>[^/]*)/',contests,name="contests"),
     url(r'^friends/',friendsunsolved,name="friendsunsolved"),
-    url(r'^suggest/(?P<slug>.*)/',suggestor,name="suggestor"),
-    url(r'^pluginload/(?P<slug>.*)/(?P<handle>.*)/',plugin_load,name="plugin_suggestor"),
+    url(r'^suggest/(?P<handle>[^/]*)/(?P<slug>[^/]*)/',suggestor,name="suggestor"),
+    url(r'^pluginload/(?P<handle>[^/]*)/(?P<slug>[^/]*)/',plugin_load,name="plugin_suggestor"),
     # url(r'^invite/(?P<handle>.*)/',foobarinvite,name="foobarinvite"),
     # url(r'^change/(?P<handle>.*)/(?P<stat>.*)/',acceptinvite,name="invitestatuschange"),
     # url(r'^adspage/',adspage,name="adspage"),

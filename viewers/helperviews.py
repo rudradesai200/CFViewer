@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect, HttpResponseRedirect
 from django.http import JsonResponse
 from django.contrib import messages
 from core.models import Contests, Problems, CFUsers
+from django.utils.timezone import now
 
 # Python Libraries 
 import requests
@@ -10,6 +11,9 @@ from collections import OrderedDict
 import time
 import random
 import numpy
+
+def returnguest(request):
+    return {"firstName":"Guest","handle":"Guest","maxRating":0,"minRating":0,"titlePhoto":"/static/assets/images/users/d3.jpg"}
 
 def userinfo(request,handle):
     '''
@@ -27,28 +31,34 @@ def userinfo(request,handle):
         r = requests.get('https://codeforces.com/api/user.info?handles={}'.format(handle)).json()
     except:
         messages.error(request,"Codeforces unavailabe")
-        return {"firstName":"Guest","handle":"Guest","maxRating":0,"minRating":0,"titlePhoto":"/static/assets/images/users/d3.jpg"}
+        return returnguest(request)
     else:
         # print("good")
         if r['status'] == "OK":
-            res = r['result'][0]
+            try:
+                res = r['result'][0]
+            except:
+                return returnguest(request)
+                
             x = ""
 
             users = CFUsers.objects.filter(handle=res['handle'])
             if(len(users) == 0):
-                user = CFUsers(handle=res['handle'])
+                user = CFUsers(handle=res['handle'],last_seen=now())
                 user.save()
             else:
                 user = users[0]
             
             user.page_visits += 1
-            
+            # user.last_seen = now()
             user.page += "\n" + request.path
             try:
                 user.referer += "\n" + request.META['HTTP_REFERER']
             except:
                 pass
 
+            user.last_seen = now()
+        
             user.save()
             try:
                 x = res['firstName']
@@ -56,7 +66,7 @@ def userinfo(request,handle):
                 res['firstName'] = res['handle']
             return res
         else:
-            return {"firstName":"Guest","maxRating":0,"minRating":0,"handle":"Guest","titlePhoto":"/static/assets/images/users/d3.jpg"}
+            return returnguest(request)
 
 def ratingchange(request,handle):
     '''
@@ -166,7 +176,7 @@ def getcharts(request,handle):
     ranklist,contids,days = ratingchange(request,handle)
     return (user,m,mtag,msubs,prbcnt,ranklist,contids,days)
 
-def suggestor_helper(request,slug, handle):
+def suggestor_helper(request,handle,slug):
     '''
         @type: helperfunction ;
         @return: renders suggest pages for problems and contests ;
@@ -228,48 +238,48 @@ def suggestor_helper(request,slug, handle):
         context={"user":user,"prbs":prbs,"minindex":minindex,"maxindex":maxindex,"ratingmax":ratingmax,"ratingmin":ratingmin}
         return ("success",context)
     elif slug == "contest":
-            user=userinfo(request,handle)
-            try:
-                _,contids,_ = ratingchange(request,handle)
+        user=userinfo(request,handle)
+        try:
+            _,contids,_ = ratingchange(request,handle)
 
-                diffs = []
-                for x in contids:
-                    try:
-                        diffs.append(Contests.objects.get(contid=x).difficulty)
-                    except:
-                        pass
-
-                if len(diffs) != 0:
-                    diffs = numpy.array(diffs)
-                    mindiff = int(numpy.mean(diffs))
-                    maxdiff = int(min(mindiff + 2,10))
-                else:
-                    mindiff = 0
-                    maxdiff = 10
-                if len(contids) != 0:
-                    nids = set(contids)
-                else:
-                    nids = []
-            except:
-                contids = []
-                mindiff = 0
-                maxdiff = 10
-                nids = []
-            c = Contests.objects.filter(difficulty__gte=mindiff,difficulty__lte=maxdiff)
-            for x in nids:
+            diffs = []
+            for x in contids:
                 try:
-                    c.exclude(contid=x)
+                    diffs.append(Contests.objects.get(contid=x).difficulty)
                 except:
                     pass
-            c = list(c)
-            random.shuffle(c)
-            c = c[:min(10,len(c))]
-            context={"contests":c,"user":user,"mindiff":mindiff,"maxdiff":maxdiff}
-            return ("success",context)
 
-    errmsg = "URL error. Please try again"
-    context={"msg":errmsg}
-    return ("error",context)
+            if len(diffs) != 0:
+                diffs = numpy.array(diffs)
+                mindiff = int(numpy.mean(diffs))
+                maxdiff = int(min(mindiff + 2,10))
+            else:
+                mindiff = 0
+                maxdiff = 10
+            if len(contids) != 0:
+                nids = set(contids)
+            else:
+                nids = []
+        except:
+            contids = []
+            mindiff = 0
+            maxdiff = 10
+            nids = []
+        c = Contests.objects.filter(difficulty__gte=mindiff,difficulty__lte=maxdiff)
+        for x in nids:
+            try:
+                c.exclude(contid=x)
+            except:
+                pass
+        c = list(c)
+        random.shuffle(c)
+        c = c[:min(10,len(c))]
+        context={"contests":c,"user":user,"mindiff":mindiff,"maxdiff":maxdiff}
+        return ("success",context)
+    else:
+        errmsg = "URL error. Please try again"
+        context={"msg":errmsg}
+        return ("error",context)
 
 def plugin_load(request,slug,handle):
     status, context = suggestor_helper(request,slug,handle)

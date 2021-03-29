@@ -80,7 +80,8 @@
                         </div>
                         <h2 class="mt-3 text-center">Handle</h2>
                         <p class="text-center">Enter your Codeforces handle to continue.</p>
-                        <form class="mt-4" method="GET" action="/cfviewer/dashboard/">
+                        <form class="mt-4" method="POST">
+                            {% csrf_token %}
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -93,10 +94,11 @@
                                     <button type="submit" class="btn btn-block btn-dark">Continue</button>
                                 </div>
                                 <div class="col-lg-12 text-center mt-5">
-                                    Continue anonymously <a href="/cfviewer/dashboard/?handle=" class="text-danger">Link</a>
+                                    Continue anonymously <a href="/cfviewer/dashboard//" class="text-danger">Link</a>
                                 </div>
                             </div>
                         </form>
+                        
                     </div>
                 </div>
             </div>

@@ -13,7 +13,7 @@ import json
 import requests
 from collections import OrderedDict
 
-def dashboard(request):
+def dashboard(request,handle):
     '''
         @type: renderfunction ;
         @return: renders dashboards page ;
@@ -24,7 +24,6 @@ def dashboard(request):
             Silent error handling. Supports anonymous views;
     '''
     try:
-        handle = request.GET['handle']
         user,m,mtag,msubs,prbcnt,ranklist,_,days  = getcharts(request,handle)    
     except: 
         messages.error(request,"Please enter a handle to view dashboard")
@@ -46,7 +45,7 @@ def dashboard(request):
         "days":days
         })
 
-def contests(request):
+def contests(request,handle):
     '''
         @type: renderfunction ;
         @return: renders contests page ;
@@ -59,11 +58,6 @@ def contests(request):
             no error message given, substitutes guest everywhere.
             Supports anonymous views also;
     '''
-    try:
-        handle = request.GET['handle']
-    except:
-        handle = ""
-
     user = userinfo(request,handle)
 
     ress = Contests.objects.all()
@@ -91,7 +85,7 @@ def contests(request):
 
     return render(request, 'contests.html', {'ress':ress,'user':user})
 
-def problems(request):
+def problems(request,handle):
     '''
         @type: renderfunction ;
         @return: renders problems page ;
@@ -104,11 +98,6 @@ def problems(request):
             silent error handling.
             Supports anonymous views also;
     '''
-    try:
-        handle = request.GET['handle']
-    except:
-        handle = ""
-
     user = userinfo(request,handle)
     
     solved = []
@@ -250,27 +239,6 @@ def friendsunsolved(request):
         # ranklist = {}
         days = {}
         fdays = {}
-        # ranklist = OrderedDict()
-        # for x,y in days.items():
-        #     # print(x)
-        #     ranklist[x] = [0,0]
-        # for x,y in fdays.items():
-        #     ranklist[x] = [0,0]
-        # prev1 = 0
-        # for x,y in ranklist.items():
-        #     if x in days:
-        #         ranklist[x][0] = days[x]
-        #         prev1 = days[x]
-        #     else:
-        #         ranklist[x][0] = prev1
-        # prev2 = 0
-        # for x in ranklist:
-        #     if x in fdays:
-        #         ranklist[x][1] = fdays[x]
-        #         prev2 = fdays[x]
-        #     else:
-        #         ranklist[x][1] = prev2
-        # contextdict = {"user":user,"m":m,"mtag":mtag,"msubs":msubs,"prbcnt":prbcnt,"ranklist":ranklist,"fuser":fuser,"fm":fm,"fmtag":fmtag,"fmsubs":fmsubs,"fprbcnt":fprbcnt,"franklist":franklist}
         contextdict = {
             "user":user,
             "fuser":fuser,
@@ -340,7 +308,7 @@ def friendsunsolved(request):
         messages.error(request,"{} Handle not found".format(friend))
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-def suggestor(request,slug):
+def suggestor(request,handle,slug):
     '''
         @type: renderfunction ;
         @return: renders suggest pages for problems and contests ;
@@ -352,12 +320,8 @@ def suggestor(request,slug):
             If slug is not 'problem' or 'contest' then redirects to home page 
             with error message. Else silent error handling. Supports anonymous views;
     '''
-    try:
-        handle = request.GET['handle']
-    except:
-        handle=""
 
-    status,context = suggestor_helper(request,slug,handle)
+    status,context = suggestor_helper(request,handle,slug)
 
     if(status == "success"):
         if(slug == "problem"):

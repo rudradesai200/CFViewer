@@ -14,9 +14,13 @@ def home(request):
         @errorhandling:
             None ;
     '''
+    if request.method == "POST":
+        handle = request.POST['handle']
+        return redirect("/cfviewer/dashboard/{}/".format(handle))
+
     return render(request,"home.html",context=None)
 
-def showbooks(request):
+def showbooks(request,handle):
     '''
         @type: StaticRenderFunction ;
         @return: renders books page ;
@@ -25,11 +29,6 @@ def showbooks(request):
         @errorhandling:
             Silent. Supports anonymous view;
     '''
-    try:
-        handle = request.GET['handle']
-    except:
-        handle=""
-    
     user = userinfo(request,handle)
     
     return render(request,"books.html",context={"user":user})
