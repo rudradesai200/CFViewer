@@ -113,11 +113,15 @@
                 <div id="ex3" class="alert alert-info modal" style="display: none; margin-top: 10%; height: auto;">
                     <p>
                             <h2><b><u>Please don't ignore this message</u></b></h2>
-                            <h3>A big thanks for using my project!</h3> I hope you like it.
+                            <h3>Hey {% if user.firstName %}
+                                {{user.firstName}}
+                            {% else %}
+                                {{user.handle}}
+                            {% endif %}, A big thanks to you for using my project!</h3> I hope you like it.
                             <br><br>
 
-                            Please consider donating to keep this project running. I have run out of funds to host this website on AWS.
-                            If I will get enough donations, I will move this site to a new domain - cfviewer.com.<br><br>
+                            Please consider donating to keep this project running. I have run out of funds to host this website.
+                            If more generous people like you donate, we can get a new domain name for this website - cfviewer.com.<br><br>
                             Even donations as small as <b>Rs. 100</b> will help me to serve it without ads.<br><br>
                             You can send your donations on <b>upi-id:rudrad200@icici</b> or <b>paytm:8401219589</b>.
                             <br>
