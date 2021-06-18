@@ -32,6 +32,7 @@ def fetchfirst(self):
         jsond = r.json()
     except:
         self.stdout.write(self.style.ERROR('Codeforces unavailable'))
+        return
 
     if jsond['status'] == "OK":
         results = jsond['result']
@@ -153,7 +154,9 @@ def fetchproblems(self):
     except:
         # messages.error(request,"Codeforces unavailable")
         self.stdout.write(self.style.ERROR('Codeforces unavailable'))
+        return
         # return redirect("/cfviewer/")
+    
     results = json1.get('result')
     problems = results['problems']
     problemsstats = results['problemStatistics']
