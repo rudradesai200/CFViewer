@@ -9,6 +9,54 @@ import requests
 import json
 import tqdm
 
+def fetchfirst(self):
+    try:
+        r = requests.get('https://codeforces.com/api/contest.list?gym=false')
+        jsond = r.json()
+    except:
+        self.stdout.write(self.style.ERROR('Codeforces unavailable'))
+
+    maxdiff = 0
+    if jsond['status'] == "OK":
+        results = jsond['result']
+        i = 1
+        for res in tqdm.tqdm(results):
+            # print("Storing contest {} out of {}".format(i,len(results)))
+            i += 1
+            cont = Contests()
+            cont.contid = res['id']
+            cont.name = res['name']
+            cont.phase = res['phase']
+            cont.conttype = res['type']
+            cont.duration = res['durationSeconds']
+            cont.url = "codeforces.com/contest/{}".format(cont.contid)
+            tsum = 0
+            try:
+                s = requests.get('https://codeforces.com/api/contest.standings?contestId={}&from=1&count=1'.format(res['id'])).json()
+                if s['status'] == "OK":
+                    for x in s['result']['problems']:
+                        try:
+                            tsum += x['rating']
+                        except:
+                            pass
+            except:
+                pass 
+            cont.difficulty = 0
+            cont.save()
+            maxdiff = max(maxdiff, tsum)
+        Contests.objects.filter(phase="BEFORE").delete()
+
+        for cont in Contests.objects.all():
+            cont.difficulty = int((cont.difficulty*10.00)/maxdiff)
+            cont.save()
+
+        self.stdout.write(self.style.SUCCESS('Contests list Created Successfully'))
+        # return redirect("/cfviewer/contests")
+    else:
+        self.stdout.write(self.style.ERROR('Status Not Ok'))
+        # messages.error(request,"Status not ok")
+        # return redirect("/cfviewer/")
+
 def fetchcontests(self):
     '''
         @type: adminfunction;
@@ -130,6 +178,9 @@ class Command(BaseCommand):
 
     @atomic()
     def handle(self, *args, **options):
-        fetchcontests(self)
+        if(len(Contests.objects.all()) > 0):
+            fetchcontests(self)
+        else:
+            fetchfirst(self)
         fetchproblems(self)
     
