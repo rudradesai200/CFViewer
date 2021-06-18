@@ -1,0 +1,27 @@
+version: v1.0
+name: Pipeline 2
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: 'Block #1'
+    task:
+      jobs:
+        - name: Docker build
+          commands:
+            - 'echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin'
+            - 'docker pull $DOCKER_USERNAME/cfviewer:latest || true'
+            - 'docker build --cache-from=$DOCKER_USERNAME/cfviewer:latest -t $DOCKER_USERNAME/cfviewer:latest .'
+            - 'docker push $DOCKER_USERNAME/cfviewer:latest'
+      prologue:
+        commands:
+          - sem-version python 3.7
+          - checkout
+          - cache restore
+          - mkdir -p .pip_cache
+          - pip install --cache-dir .pip_cache -r requirements.txt
+          - cd cfviewer
+          - 'python manage.py makemigrations '
+          - python manage.py migrate
+          - cd ..
