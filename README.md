@@ -10,12 +10,12 @@ CFViewer is a project designed to help competetive programmers who use codeforce
   - First, download `docker` and verify you have properly installed it.
     - This link may help - [https://docs.docker.com/desktop/](Link)
   - Now, pull the cfviewer image using the following commmand (It may take some time depending on your internet connectivity)
-    - `docker pull rudradesai200/cfviewer`
+    - `docker pull rudradesai200/cfviewer:latest`
   - The setup is complete, now you are ready to run the CFViewer image
 
 ## Usage
   - You can start the container by using the following command,
-    - `docker run -it -p 8020:8020 rudradesai200/cfviewer`
+    - `docker run -it -p 8020:8020 rudradesai200/cfviewer:latest`
   - Once the image is run, you can open CFViewer by opening the following url on any browser,
     - `http://localhost:8020` 
 
