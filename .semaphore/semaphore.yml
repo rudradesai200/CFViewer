@@ -12,14 +12,18 @@ blocks:
           commands:
             - sem-version python 3.7
             - checkout
-            - pip install -r requirements.txt
+            - mkdir .pip_cache
+            - cache restore
+            - pip install --cache-dir .pip_cache -r requirements.txt
+            - cache store
   - name: Test
     task:
       prologue:
         commands:
           - sem-version python 3.7
           - checkout
-          - pip install -r requirements.txt
+          - cache restore
+          - pip install --cache-dir .pip_cache -r requirements.txt
       jobs:
         - name: Unit Tests
           commands:
