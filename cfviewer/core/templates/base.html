@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+	<head>
+		<title> {% block title %}Welcome to CFViewer{% endblock %}</title>
+		<meta charset="UTF-8">
+		<meta name="author" content="Rudra Desai">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<link rel="icon" type="image/png" sizes="16x16" href="{% static 'core/assets/images/favicon.png' %}" >
+
+		<link href="{% static 'core/dist/css/graphs.css' %}" rel="stylesheet" />
+		<link href="{% static 'core/dist/css/style.min.css' %}" rel="stylesheet">
+
+		<!-- Other head files -->
+		{% block head %}{% endblock %}
+
+	</head>
+	<body>
+		<!--Pre loader-->
+		{% block bodytop %}{% endblock %}
+		<div class="preloader">
+			<div class="lds-ripple">
+				<div class="lds-pos"></div>
+				<div class="lds-pos"></div>
+			</div>
+		</div>
+
+
+		<!-- Messages -->
+		{% include 'includes/messaging.html' %}
+
+		<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+		data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+
+			<!-- Navbar -->
+			{% include 'includes/nav.html' %}
+
+			<!-- Body content -->
+			{% block content %}{% endblock %}
+
+			<!-- Footer -->
+			{% include 'includes/footer.html' %}
+		
+		</div>
+
+		<!-- CDN scripts -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://unpkg.com/@popperjs/core@2"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" integrity="sha256-XfzdiC+S1keia+s9l07y7ye5a874sBq67zK4u7LTjvk=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js" integrity="sha256-BuAkLaFyq4WYXbN3TFSsG1M5GltEeFehAMURi4KBpUM=" crossorigin="anonymous"></script>
+
+		<!-- Other scripts -->
+		<script src="{% static 'core/dist/js/app-style-switcher.min.js' %}" ></script>
+		<script src="{% static 'core/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js' %}" ></script>
+		<script src="{% static 'core/dist/js/sidebarmenu.min.js' %}" ></script>
+		<script src="{% static 'core/dist/js/custom.min.js' %}" ></script>
+
+		<!-- User scripts -->
+		{% block scripts %}
+		{% endblock %}
+
+	</body>
+</html>
