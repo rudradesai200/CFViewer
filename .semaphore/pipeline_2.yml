@@ -25,3 +25,5 @@ blocks:
           - 'python manage.py makemigrations '
           - python manage.py migrate
           - cd ..
+      secrets:
+        - name: Dockerhub
