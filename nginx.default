@@ -2,7 +2,7 @@
 
 server {
     listen 8020;
-    server_name example.org;
+    server_name cfviewer.com;
 
     location / {
         proxy_pass http://127.0.0.1:8010;
