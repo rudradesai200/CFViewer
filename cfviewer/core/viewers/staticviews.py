@@ -16,7 +16,7 @@ def home(request):
     '''
     if request.method == "POST":
         handle = request.POST['handle']
-        return redirect("/cfviewer/dashboard/{}/".format(handle))
+        return redirect("/dashboard/{}/".format(handle))
 
     return render(request,"home.html",context=None)
 

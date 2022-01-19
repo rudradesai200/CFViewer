@@ -11,8 +11,21 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
-from secret import addsettings
 from pathlib import Path
+import environ
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False),
+    DB_ENGINE=(str,None),
+    DB_NAME=(str,None),
+    DB_USER=(str,None),
+    DB_PASS=(str,None),
+    DB_HOST=(str,None),
+    SECRET_KEY=(str,"SomethingRandom")
+)
+
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,13 +35,33 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = addsettings.SECRET_KEY
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = addsettings.DEBUG 
+if env('DEBUG'):
+    DEBUG = env('DEBUG')
+else:
+    DEBUG = False
 
-ALLOWED_HOSTS = addsettings.ALLOWED_HOSTS 
+ALLOWED_HOSTS = ['localhost','127.0.0.1','cfviewer.rudradesai.in']
 
+if env('DB_ENGINE') and env('DB_NAME') and env('DB_USER') and env('DB_PASS'):
+    DATABASES = {
+        'default': {
+            'ENGINE': env('DB_ENGINE'),
+            'NAME': env('DB_NAME'),
+            'USER': env('DB_USER'),
+            'PASSWORD': env('DB_PASS'),
+            'HOST': env('DB_HOST'), 
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 # Application definition
 
@@ -73,10 +106,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'CFViewer.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = addsettings.DATABASES 
+# DB
+# https://docs.djangoproject.com/en/3.2/ref/settings/#DBs
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -113,7 +144,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 # Default primary key field type
@@ -122,23 +153,19 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-if not DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    STATIC_ROOT = os.path.join(BASE_DIR,'static')
-else:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, "static"),
-        '/var/www/static/',
-    ]
+# if not DEBUG:
+#     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#     STATIC_ROOT = os.path.join(BASE_DIR,'static')
+# else:
+#     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#     STATICFILES_DIRS = [
+#         os.path.join(BASE_DIR, "static"),
+#         '/var/www/static/',
+#     ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-EMAIL_HOST = addsettings.EMAIL_HOST
-EMAIL_USE_TLS = addsettings.EMAIL_USE_TLS
-EMAIL_PORT = addsettings.EMAIL_PORT
-EMAIL_HOST_USER = addsettings.EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = addsettings.EMAIL_HOST_PASSWORD
-
-CORS_ALLOWED_ORIGINS = addsettings.CORS_ALLOWED_ORIGINS
+CORS_ALLOWED_ORIGINS = [
+    "https://codeforces.com",
+]

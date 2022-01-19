@@ -107,21 +107,24 @@ def problems(request,handle):
         subs = requests.get('https://codeforces.com/api/user.status?handle={}'.format(handle)).json()['result']
     except:
         subs = []
+    
     for x in subs:
         if x['verdict'] == "OK":
             solved.append(x['problem']['name'])
         else:
             unsolved.append(x['problem']['name'])
+    
     prbs = []
     index = None
     try:
-        ratingmax = min(user['maxRating'] + 300,3500)
+        ratingmax = user['maxRating'] + 300
     except:
         ratingmax = 1000
     try:
-        ratingmin = max(min(user['maxRating'] - 100,3000),0)
+        ratingmin = max(user['maxRating'] - 100,0)
     except:
         ratingmin = 0
+    
     show_tags = False
     taglist = None
     filterform = ProblemFilterForm()
@@ -135,23 +138,21 @@ def problems(request,handle):
             taglist = tags.split(',')
             show_tags = filterform.cleaned_data.get('show_tags')
         else:
-            # print(filterform.errors)
             messages.error(request,"Invalid values provided")
-            # return redirect("/cfviewer/")
     
 
     if (ratingmax == None) and (ratingmin == None):
         try:
-            ratingmax = min(user['maxRating'] + 300,3500)
+            ratingmax = user['maxRating'] + 300
         except:
             ratingmax = 1000
         try:
-            ratingmin = max(min(user['maxRating'] - 100,3000),0)
+            ratingmin = max(user['maxRating'] - 300,0)
         except:
             ratingmin = 0
     else:
         if(ratingmax == None):
-            ratingmax = 3800
+            ratingmax = 4000
         if(ratingmin == None):
             ratingmin = 0
 
@@ -198,7 +199,7 @@ def friendsunsolved(request):
 
     if handle == "":
         messages.error(request,"Please enter your handle to continue")
-        return redirect("/cfviewer/")
+        return redirect("/")
 
     user = userinfo(request,handle)
     try:
@@ -207,7 +208,7 @@ def friendsunsolved(request):
         x = user['handle']
     if x == "Guest":
         messages.error(request,"You need to login in before comparing")
-        return redirect("/cfviewer/") 
+        return redirect("/") 
     
     friend = request.GET['friend']
     friendinf = requests.get('https://codeforces.com/api/user.info?handles={}'.format(friend)).json()
@@ -331,7 +332,7 @@ def suggestor(request,handle,slug):
             return render(request,"suggestconts.html",context=context)
 
     messages.error(request,context['msg'])
-    return redirect("/cfviewer/")
+    return redirect("/")
 
 def submissionsviewer(request,handle,contid):  
     '''
@@ -353,7 +354,7 @@ def submissionsviewer(request,handle,contid):
 
     if subs['status'] != "OK":
         messages.error(request,"Handle not found. Please provide a proper handle")
-        return redirect("/cfviewer/")
+        return redirect("/")
     
     nids = []
     for x in subs['result']:
