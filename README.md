@@ -4,24 +4,30 @@
 CFViewer is a project designed to help competetive programmers who use codeforces platform for participating in contests and problem solving. There are many features present on the website, which coders can use to find and explore new problems and contests.
 
 ## Recent Updates
-<ol>
-  <li>A small firefox extension has been made for the suggestions pages. You can search for it on the firefox store or download it from <a href="https://addons.mozilla.org/addon/cfviewer/">here</a>.</li>
-  <li>Now you can access site using https too.</li>
-</ol>
+  - CFViewer is now available as a docker container. So, users can directly pull cfviewer from DockerHub and use it without any installation. Follow the steps below to use CFViewer.
 
-## Firefox Extension
-  ### Instructions to use
-  <ul>
-    <li>Download it and install it on firefox . Reload firefox if necessary.</li>
-    <li> The extension can only be run from the codeforces.com website.</li>
-    <li> You need to be logged in on codeforces to use it.</li>
-    <li> Click on the logo in your extensions bar</li>
-    <li> Select which type of suggestion you want.</li>
-    <li> A pop-up will appear containing the suggestion. Press OK to be redirected to that question.</li>
-   </ul>
+## Setup
+  - First, download `docker` and verify you have properly installed it.
+    - This link may help - [https://docs.docker.com/desktop/](Link)
+  - Now, pull the cfviewer image using the following commmand (It may take some time depending on your internet connectivity)
+    - `docker pull rudradesai200/cfviewer:latest`
+  - The setup is complete, now you are ready to run the CFViewer image
 
-  ### Snapshots
-  It can be viewed from this <a href="https://addons.mozilla.org/addon/cfviewer/">page</a>.
+## Usage
+  - You can start the container by using the following command,
+    - `docker run --rm  -dp 8020:8020 rudradesai200/cfviewer:latest --name web`
+  - Once the image is run, you can open CFViewer by opening the following url on any browser,
+    - `http://localhost:8020` 
+
+## Extras
+  - To open the admin console, you need to start the container with following flags
+    - DJANGO_SUPERUSER_USERNAME
+    - DJANGO_SUPERUSER_PASSWORD
+    - DJANGO_SUPERUSER_EMAIL
+  - For Ex,
+    - `docker run --rm  -dp 8020:8020 -e DJANGO_SUPERUSER_USERNAME=admin -e DJANGO_SUPERUSER_PASSWORD=password -e DJANGO_SUPERUSER_EMAIL=admin@example.com rudradesai200/cfviewer`
+  - Now to access the admin console, go to
+    - `http://localhost:8020/admin`
 
 ## Contributing
 This platform is completely made using Django-Python Framework. Because, it is hosted on my personal AWS server, I cannot share the complete project on GitHub, So, I have shared just the main app here. Please try to test if it is working or not first, then only open a pull request. Any suggestion and edits are welcome! Thanks in advance for the contribution.

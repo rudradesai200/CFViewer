@@ -1,0 +1,9 @@
+Django==3.2.11
+requests==2.22.0
+tqdm==4.61.1
+numpy==1.21.0
+gunicorn
+mysql-connector-python
+pymysql
+cryptography
+django-environ
