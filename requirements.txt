@@ -3,3 +3,7 @@ requests==2.22.0
 tqdm==4.61.1
 numpy==1.19.5
 gunicorn
+mysql-connector-python
+pymysql
+cryptography
+django-environ

@@ -15,7 +15,7 @@ CFViewer is a project designed to help competetive programmers who use codeforce
 
 ## Usage
   - You can start the container by using the following command,
-    - `docker run -it -p 8020:8020 rudradesai200/cfviewer:latest`
+    - `docker run --rm  -dp 8020:8020 rudradesai200/cfviewer:latest --name web`
   - Once the image is run, you can open CFViewer by opening the following url on any browser,
     - `http://localhost:8020` 
 
@@ -25,7 +25,7 @@ CFViewer is a project designed to help competetive programmers who use codeforce
     - DJANGO_SUPERUSER_PASSWORD
     - DJANGO_SUPERUSER_EMAIL
   - For Ex,
-    - `docker run -it -p 8020:8020 -e DJANGO_SUPERUSER_USERNAME=admin -e DJANGO_SUPERUSER_PASSWORD=password -e DJANGO_SUPERUSER_EMAIL=admin@example.com rudradesai200/cfviewer`
+    - `docker run --rm  -dp 8020:8020 -e DJANGO_SUPERUSER_USERNAME=admin -e DJANGO_SUPERUSER_PASSWORD=password -e DJANGO_SUPERUSER_EMAIL=admin@example.com rudradesai200/cfviewer`
   - Now to access the admin console, go to
     - `http://localhost:8020/admin`
 

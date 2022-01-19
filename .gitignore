@@ -4,7 +4,8 @@ migrations/
 __pycache__/
 *.py[cod]
 *$py.class
-
+.env
+docker-compose.yml
 # C extensions
 *.so
 
