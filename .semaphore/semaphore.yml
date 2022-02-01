@@ -31,10 +31,6 @@ blocks:
             - python manage.py makemigrations
             - python manage.py migrate
             - python manage.py test
-        - name: Checklist
-          commands:
-            - cd cfviewer
-            - python manage.py check --deploy
 promotions:
   - name: Dockerize
     pipeline_file: pipeline_2.yml
