@@ -43,7 +43,7 @@ if env('DEBUG'):
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','cfviewer.rudradesai.in']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','*.rudrad.in']
 
 if env('DB_ENGINE') and env('DB_NAME') and env('DB_USER') and env('DB_PASS'):
     DATABASES = {
