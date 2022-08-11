@@ -1,4 +1,4 @@
-Django==3.2.11
+Django==3.2.15
 requests==2.22.0
 tqdm==4.61.1
 numpy==1.21.0
